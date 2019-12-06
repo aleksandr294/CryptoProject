@@ -1,0 +1,213 @@
+# -*- coding: utf-8 -*-
+Root:
+    text_input: text_input
+    file_name: file_name
+    time_create: time_create
+    size_file: size_file
+    check: check
+    showMessage: showMessage
+    message: message
+    FloatLayout:
+        size_hint: (1, 1)
+        canvas.before:
+            Color:
+                rgba: .16, .16, .16, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        GridLayout:
+            size_hint: (1, .2)
+            pos_hint:({'top': 1, 'center_x':0.5})
+            cols: 2
+            Label:
+                size_hint: (.3, .3)
+                text: 'Название файла'.encode('cp1251').decode('utf-8')
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .15, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                id: file_name
+                size_hint: (.3, .3)
+                text: ''
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                size_hint: (.3, .3)
+                text: 'Дата создания файла'.encode('cp1251').decode('utf-8')
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                id: time_create
+                size_hint: (.3, .3)
+                text: ''
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                size_hint: (.3, .3)
+                text: 'Размер файла'.encode('cp1251').decode('utf-8')
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                id: size_file
+                size_hint: (.3, .3)
+                text: ''
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            Label:
+                size_hint: (.3, .3)
+                text: 'Файл подтвержден'.encode('cp1251').decode('utf-8')
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+            CheckBox:
+                id: check
+                size_hint: (.1, .1)
+                center: self.parent.center
+                active: False
+                canvas.before:
+                    Color:
+                        rgba: .75, .75, .75, 1
+                    Line:
+                        width: 0.7
+                        rectangle: self.x, self.y, self.width, self.height           
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, .05)
+            Button:
+                text: 'Открыть'.encode('cp1251').decode('utf-8')
+                on_release: root.loadFile()
+            Button:
+                text: 'Сохранить'.encode('cp1251').decode('utf-8')
+                on_release: root.show_save()
+            Button:
+                text:  'Выход'.encode('cp1251').decode('utf-8')
+                on_release: app.stop()
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (1, .6)
+            pos_hint:({'top': 0.66, 'center_x':0.5})
+            Label:
+                size_hint: (1, .2)
+                align: 'right'
+                valign: 'middle'
+                text: 'Предпросмотр'.encode('cp1251').decode('utf-8')
+            RstDocument:
+                id: text_input
+                size_hint: (1, .7)
+                text: ''
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, .1)
+            pos_hint:({'top': 0.78, 'center_x':0.5})
+            Button:
+                text: 'Шифровать'.encode('cp1251').decode('utf-8')
+                on_release: root.crypt(text_input)
+            Button:
+                text:  'Расшифровать'.encode('cp1251').decode('utf-8')
+                on_release: root.decrypt(text_input)
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 4
+        size_hint: (1, 1)
+        canvas.before:
+            Color:
+                rgba: .16, .16, .16, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        TextInput:
+            id: showMessage
+            multiline: True
+            size_hint: (1, .4)
+            text: ''
+            canvas.before:
+                Color:
+                    rgba: .0, .0, .0, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height           
+        BoxLayout:
+            size_hint: (1, .4)
+            orientation: 'horizontal'
+            TextInput:
+                id: message
+                size_hint: (.8, .2)
+                text: ''
+            Button:
+                size_hint: (.2, .2)
+                text: 'Отправить'.encode('cp1251').decode('utf-8')
+                on_release: root.send_message(message.text)
+        
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+            filters: ['*.docx']
+            show_hidden: True
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Отмена'.encode('cp1251').decode('utf-8')
+                on_release: root.cancel()
+
+            Button:
+                text: 'Загрузить'.encode('cp1251').decode('utf-8')
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<SaveDialog>:
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            show_hidden: True
+            on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Отмена'.encode('cp1251').decode('utf-8')
+                on_release: root.cancel()
+
+            Button:
+                text: 'Сохранить'.encode('cp1251').decode('utf-8')
+                on_release: root.save(filechooser.path, text_input.text)

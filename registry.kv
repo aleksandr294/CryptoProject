@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+Root:
+    firstName: firstName
+    secondName: secondName
+    password: password
+    post: post
+    FloatLayout:
+        BoxLayout:
+            size_hint: (1, .8)
+            pos_hint:({'top': 1, 'center_x':0.5})
+            cols: 2
+            orientation: 'vertical'
+            TextInput:
+                id: firstName
+                hint_text: 'Введите фамилию сотрудника'.encode('cp1251').decode('utf-8')
+                text: ''
+            
+            TextInput:
+                id: secondName
+                text: ''
+                hint_text: 'Введите имя сотрудника'.encode('cp1251').decode('utf-8')
+            
+            TextInput:
+                id: password
+                text: ''
+                password: True
+                hint_text: 'Введите пароль сотрудника'.encode('cp1251').decode('utf-8')
+            
+            TextInput:
+                id: post
+                text: ''
+                hint_text: 'Введите должность'.encode('cp1251').decode('utf-8')
+        BoxLayout:
+            size_hint: (1, .2)
+            orientation: 'horizontal'
+            Button:
+                text: 'Отправить'.encode('cp1251').decode('utf-8')
+                on_release: root.write(firstName.text, secondName.text, password.text, post.text)
+            Button:
+                text: 'Отмена'.encode('cp1251').decode('utf-8')
+                on_release: app.stop()
+        
+<Notification>:
+    auto_dismiss: False
+    size_hint: (.4, .4)
+    title: 'Уведомление'.encode('cp1251').decode('utf-8')
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Данные внесены'.encode('cp1251').decode('utf-8')
+        Button:
+            text: 'Ок'.encode('cp1251').decode('utf-8')
+            on_release: root.dismiss()
+        
+                

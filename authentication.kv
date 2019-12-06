@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+Check:
+    FloatLayout:
+        size_hint: (1, 1)
+        
+        canvas.before:
+            Color:
+                rgba: .16, .16, .16, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            size_hint: (1, 1)
+            orientation: 'vertical'
+            spacing: 10
+            pos_hint:({'top': 1, 'center_x':0.8})
+            Label:
+                size_hint: (.4, .02)
+                text: 'Введите ваше имя фамилию'.encode('cp1251').decode('utf-8')
+            TextInput:
+                id: fullname
+                size_hint: (.4, .02)
+                text: ''
+            Label:
+                size_hint: (.4, .02)
+                text: 'Введите ваш пароль'.encode('cp1251').decode('utf-8')
+            TextInput:
+                id: password
+                size_hint: (.4, .02)
+                text: ''
+                password: True
+            Button:
+                size_hint: (.4, .02)
+                text: 'Отправить'.encode('cp1251').decode('utf-8')
+                on_release: root.check_data(fullname.text, password.text)
